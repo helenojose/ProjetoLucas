@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `managed = True` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
@@ -21,7 +21,7 @@ class Consulta(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'consulta'
         db_table_comment = 'Gerencia o agendamento e o historico de consultas clÝnicas do paciente.'
 
@@ -34,9 +34,9 @@ class Dentista(models.Model):
     especialidade = models.CharField(max_length=100)
     data_cadastro = models.DateField()
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
-
+    
     class Meta:
-        managed = False
+        managed = True
         db_table = 'dentista'
         db_table_comment = 'Registra os dados profissionais e de contato dos dentistas.'
 
@@ -51,10 +51,10 @@ class Disponibilidade(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'disponibilidade'
         unique_together = (('dia_semana', 'horario_inicio', 'horario_fim', 'cod_dentista'),)
-        db_table_comment = 'Armazena os horßrios de atendimento semanais de cada dentista.'
+        db_table_comment = 'Armazena os horarios de atendimento semanais de cada dentista.'
 
 
 class Endereco(models.Model):
@@ -71,7 +71,7 @@ class Endereco(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'endereco'
         db_table_comment = 'Armazena os endereþos residenciais vinculados a cada paciente.'
 
@@ -88,7 +88,7 @@ class Paciente(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'paciente'
         db_table_comment = 'Registra as informacoes pessoais e de contato dos pacientes.'
 
@@ -100,7 +100,7 @@ class Procedimento(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'procedimento'
         db_table_comment = 'Catalogo de procedimentos odontologicos realizados na clinica.'
 
@@ -114,6 +114,6 @@ class UsuarioSistema(models.Model):
     status = models.IntegerField(blank=True, null=True, db_comment='Ativo (1) ou Inativo (0)')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'usuario_sistema'
         db_table_comment = 'Armazena os dados de acesso e perfis dos usuarios do sistema.'
