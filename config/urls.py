@@ -26,4 +26,3 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('cadastro/', cadastro, name='cadastro'),
 ]
-
