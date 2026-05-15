@@ -1,15 +1,151 @@
-{% load static %}
+{% extends 'base.html' %}
+{% block content %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sistema Agendamentos</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<body class="bg-[#F6F0E7] min-h-screen font-['Lora']">
+    <!--inicio sidbar-->
+    <div class="border-b border-gray-300">
 
-<body>
-    <div class="main-container"> 
+        <div class="flex items-center justify-between px-6 md:px-10 lg:px-16 py-4">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-[#A8431B]">
+
+                <i class="fa-solid fa-leaf text-4xl"></i>
+                <h1 class="text-3xl font-['Lora'] text-[#4A2B1A]">
+                    Odonto
+                </h1>
+
+            </div>
+
+            <!-- Menu -->
+            <div class="flex items-center gap-4 md:gap-8 lg:gap-10 text-gray-600">
+
+                <h1 class="cursor-pointer">Inicio</h1>
+                <h1 class="cursor-pointer">Painel</h1>
+                <h1 class="cursor-pointer">Entrar</h1>
+
+            </div>
+
+            <!-- Botão -->
+            <a href="/login/">
+                <button class="bg-[#A8431B] text-white px-4 md:px-6 py-2 rounded-full">
+                    Acessar
+                </button>
+            </a>
+        </div>
+
     </div>
+    <!--Fim sidbar-->
+<header>
+    <!--Inicio parte do titulo e do caderno no meio da tela (lado esquerdo e direito )-->
+   <section class="pt-16 sm:pt-20 md:pt-24">
+
+    <div class="flex flex-col md:flex-row items-center px-6 sm:px-10 md:px-10 lg:px-20 pt-10 gap-16">
+
+        <!-- Esquerda -->
+        <div class="w-full md:w-1/2">
+
+            <!-- Badge -->
+            <div class="w-fit border border-gray-300 bg-white/50 rounded-full mb-6 sm:mb-8">
+                <h1 class="text-black/60 px-4 py-2 text-xs sm:text-sm tracking-[0.2em]">
+                    FEITO À MÃO · 2026
+                </h1>
+            </div>
+
+            <!-- Título -->
+            <div class="max-w-3xl">
+
+                <h1 class=" text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-[78px] font-['Lora']
+                    text-[#4A2B1A] leading-[0.95] tracking-[-0.04em] ">
+                        Agende com
+                    <span class="text-[#A8431B]">calma</span>,
+                    <br>
+                        organize com
+                    <br>
+                    <span class="italic">
+                        cuidado.
+                    </span>
+                </h1>
+
+            </div>
+
+            <!-- Texto -->
+            <div class="max-w-xl">
+
+                <p class=" mt-6 sm:mt-8 text-lg sm:text-xl md:text-2xl leading-relaxed text-[#6b4b3e]">
+                    Um sistema simples e quente para sua equipe
+                    registrar, ajustar e acompanhar agendamentos —
+                    sem ruído, com a textura do papel.
+                </p>
+
+                <button class="bg-[#A8431B] rounded-full p-3 text-white pl-6 pr-6 mt-12 hover:scale-105 transition duration-500">
+                    Abrir o Caderno
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Direita -->
+        <div class="relative w-full md:w-1/2 mt-12 md:mt-24 lg:mt-40 mx-auto flex justify-center">
+
+            <div class="absolute text-center left-6 md:left-16 lg:left-24 inset-0 bg-[#e2dacf] rounded-xl rotate-[3deg] w-full md:w-[85%] lg:w-3/4"></div>
+            <!--inicio do caderno com marcador de Historico de agendamentos-->
+            <div class="relative flex flex-col border boder-gray-300 bg-[#FFFDF9] w-full md:w-[85%] lg:w-3/4 p-6 rounded-xl rotate-[-2deg] shadow-xl hover:scale-105 transition duration-500">
+
+                <div class="flex justify-between items-center ">
+
+                    <h1 class="text-2xl text-gray-700">
+                        Caderno de Hoje
+                    </h1>
+                    <p class="bg-red-200/60 rounded-full p-1 text-sm pl-2 pr-2 text-red-700">
+                        3 marcados
+                    </p>
+
+                </div>
+
+                <!--Linha pontilhada-->
+                <div 
+                    class="border-b border-dashed border-gray-300 my-4">
+                </div>  
+                <!--Linha pontilhada-->
+
+                <!--Fim do caderno com marcador de Historico de agendamentos-->
+
+                <!--Inicio Historico de agendamentos-->
+                <div class="flex items-center gap-4 mb-2">
+                    <h1 class="text-3xl text-[#A8431B] "> 09:00 </h1>
+                    <div class="text-[#4A2B1A]">
+                        <p>MARIA HELENA</p>
+                        <P class="opacity-60">Manutenção</P>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 mt-4 mb-2">
+                    <h1 class="text-3xl text-[#A8431B] "> 09:00 </h1>
+                    <div class="text-[#4A2B1A]">
+                        <p>MARIA HELENA</p>
+                        <P class="opacity-60">Manutenção</P>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 mt-4 mb-2">
+                    <h1 class="text-3xl text-[#A8431B] "> 09:00 </h1>
+                    <div class="text-[#4A2B1A]">
+                        <p>MARIA HELENA</p>
+                        <P class="opacity-60">Manutenção</P>
+                    </div>
+                </div>
+                <!--Fim Historico de agendamentos-->
+
+            </div>
+            
+        </div>
+
+    </div>
+<!--Inicio parte do titulo e do caderno no meio da tela (lado esquerdo e direito )-->
+
+</section>
+</header>
 </body>
-</html>
+
+{% endblock %}
