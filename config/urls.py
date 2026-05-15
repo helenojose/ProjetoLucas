@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from appcore.views import login
+
+from appcore.views import login_view
 from appcore.views import cadastro
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('login/', login),
-    path('cadastro/', cadastro),
+    path('login/', login_view, name='login'),
+    path('cadastro/', cadastro, name='cadastro'),
 ]
 

@@ -2,106 +2,82 @@
 {% block content %}
 
 <script>
-
-function mostrarSenha(){
-
-    const input = document.getElementById("senha");
-    const icone = document.getElementById("iconeOlho");
-
-    if(input.type === "password"){
-
-        input.type = "text";
-
-        icone.classList.remove("fa-eye-slash");
-        icone.classList.add("fa-eye");
-
-    }else{
-
-        input.type = "password";
-
-        icone.classList.remove("fa-eye");
-        icone.classList.add("fa-eye-slash");
-
+    function mostrarSenha() {
+        const input = document.getElementById("senha");
+        const icone = document.getElementById("iconeOlho");
+        if (input.type === "password") {
+            input.type = "text";
+            icone.classList.remove("fa-eye-slash");
+            icone.classList.add("fa-eye");
+        } else {
+            input.type = "password";
+            icone.classList.remove("fa-eye");
+            icone.classList.add("fa-eye-slash");
+        }
     }
-
-}
-
-
 </script>
 
 <div class="flex items-center justify-center min-h-screen p-4 bg-[#F6F0E7]">
-
     <div class="w-full max-w-md border border-[#DDD2C5] rounded-2xl p-8 bg-[#FAF9F6] shadow-lg">
-
         <div class="pb-4 flex items-center gap-4">
-
             <div class="p-1 rounded-xl">
                 <i class="fa-solid fa-leaf text-5xl text-[#A8431B]"></i>
             </div>
-
             <div class="flex flex-col">
                 <h1 class="text-2xl font-['Lora']">Bem-Vindo</h1>
                 <p class="opacity-60">Acesse o caderno da equipe</p>
             </div>
-
         </div>
 
         <div>
-
             <div class="flex bg-[#e7e3db] rounded-full p-1 w-full max-w-sm">
-
-                <a href="/login/" 
-                class="flex-1 text-center bg-[#F3ECE3] rounded-full py-1 font-semibold shadow-sm">
+                <a href="/login/" class="flex-1 text-center bg-[#F3ECE3] rounded-full py-1 font-semibold shadow-sm">
                     Entrar
                 </a>
-
-                <a href="/cadastro/" 
-                class="flex-1 text-center py-1  text-[#6b4b3e] font-semibold">
+                <a href="/cadastro/" class="flex-1 text-center py-1 text-[#6b4b3e] font-semibold">
                     Cadastrar
                 </a>
-
-                
-
             </div>
 
-            <form class="flex flex-col pt-8">
+            <form method="POST" class="flex flex-col pt-8">
+                {% csrf_token %}
+
+                {% if messages %}
+                {% for message in messages %}
+                <span class="text-center text-xs font-bold text-red-500 mb-2">
+                    {{ message }}
+                </span>
+                {% endfor %}
+                {% endif %}
 
                 <label class="opacity-70">E-mail</label>
-
                 <div class="relative mb-4">
                     <i class="fa-solid fa-user absolute left-3 top-5 -translate-y-1/2 text-gray-500"></i>
-                    <input class="w-full rounded p-2 pl-10 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400" 
-                    type="text"
-                    placeholder="Digite seu e-email">
-                </div>   
+                    <input name="email"
+                        class="w-full rounded p-2 pl-10 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400" type="text"
+                        placeholder="Digite seu e-email" required>
+                </div>
 
                 <label class="opacity-70">Senha</label>
-
                 <div class="relative">
                     <i class="fa-solid fa-lock absolute left-3 top-5 -translate-y-1/2 text-gray-500"></i>
-
-                    <input id="senha"
-                        class="w-full pl-10 rounded p-2 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400" 
-                        type="password"
-                        placeholder="Digite sua senha"
-                    >
+                    <input name="password" id="senha"
+                        class="w-full pl-10 rounded p-2 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400"
+                        type="password" placeholder="Digite sua senha" required>
 
                     <i id="iconeOlho"
                         class="fa-solid fa-eye absolute right-3 top-5 -translate-y-1/2 text-gray-500 cursor-pointer"
                         onclick="mostrarSenha()">
                     </i>
-                </div>  
+                </div>
 
+                <button type="submit"
+                    class="w-full bg-[#A8431B] mt-6 text-white rounded-full py-2 font-semibold shadow-lg">
+                    Entrar
+                </button>
             </form>
-
-            <button class="w-full bg-[#A8431B] mt-2 text-white rounded-full py-2 font-semibold shadow-lg">
-                Entrar
-            </button>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}
