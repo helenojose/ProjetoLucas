@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from appcore.views import login
 from appcore.views import cadastro
+from appcore.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('login/', login),
     path('cadastro/', cadastro),
+    path('', home),
 ]
 

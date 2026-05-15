@@ -26,6 +26,56 @@ function mostrarSenha(){
 
 }
 
+function validarFormulario(event){
+
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    const mensagemEmail = document.getElementById("mensagemEmail");
+    const mensagemSenha = document.getElementById("mensagemSenha");
+
+    mensagemEmail.innerHTML = "";
+    mensagemSenha.innerHTML = "";
+
+    let valido = true;
+
+    // VALIDAR EMAIL
+    if(!email.includes("@")){
+
+        mensagemEmail.innerHTML = "O e-mail precisa conter @";
+        valido = false;
+
+    }
+
+    // VALIDAR SENHA
+    const regexMaiuscula = /[A-Z]/;
+    const regexMinuscula = /[a-z]/;
+    const regexNumero = /[0-9]/;
+    const regexEspecial = /[!@#$%^&*(),.?":{}|<>]/;
+
+    if(
+    senha.length < 8 ||
+    !regexMaiuscula.test(senha) ||
+    !regexMinuscula.test(senha) ||
+    !regexNumero.test(senha) ||
+    !regexEspecial.test(senha)
+    ){
+
+        mensagemSenha.innerHTML =
+        "A senha precisa ter no mínimo 8 caracteres, letra maiúscula, minúscula, número e caractere especial.";
+
+        valido = false;
+    }
+
+    if(valido){
+
+        window.location.href = "/";
+
+    }
+
+}
 
 </script>
 
@@ -60,42 +110,54 @@ function mostrarSenha(){
                 </a>
             </div>
 
-            <form class="flex flex-col pt-8">
+            <form class="flex flex-col pt-8" onsubmit="validarFormulario(event)">
 
                 <label class="opacity-70">E-mail</label>
 
-                <div class="relative mb-4">
+                <div class="relative mb-1">
                     <i class="fa-solid fa-user absolute left-3 top-5 -translate-y-1/2 text-gray-500"></i>
-                    <input class="w-full rounded p-2 pl-10 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400" 
-                    type="text"
-                    placeholder="Digite seu e-email">
-                </div>   
+
+                    <input 
+                        id="email"
+                        class="w-full rounded p-2 pl-10 bg-[#F3ECE3] shadow-sm border border-gray-400" 
+                        type="text"
+                        placeholder="Digite seu e-mail">
+                </div>
+
+                <p id="mensagemEmail" class="text-red-500 text-sm mb-4"></p>   
 
                 <label class="opacity-70">Senha</label>
 
                 <div class="relative">
-
                     <i class="fa-solid fa-lock absolute left-3 top-5 -translate-y-1/2 text-gray-500"></i>
 
-                    <input id="senha"
-                        class="w-full pl-10 rounded p-2 bg-[#F3ECE3] mb-4 shadow-sm border border-gray-400" 
+                    <input 
+                        id="senha"
+                        class="w-full pl-10 rounded p-2 bg-[#F3ECE3] mb-1 shadow-sm border border-gray-400" 
                         type="password"
-                        placeholder="Digite sua senha"
-                    >
+                        placeholder="Digite sua senha">
 
-                    <i id="iconeOlho"
+                    <i 
+                        id="iconeOlho"
                         class="fa-solid fa-eye absolute right-3 top-5 -translate-y-1/2 text-gray-500 cursor-pointer"
                         onclick="mostrarSenha()">
                     </i>
-                </div>  
+                </div>
+
+                <p id="mensagemSenha" class="text-red-500 text-sm mb-4"></p>  
+
+                <p class="opacity-60 italic pb-4">
+                    Mín. 8 caracteres, com maiúscula, minúscula, número e caractere especial.
+                </p>
+
+                <button type="submit"
+                    class="w-full bg-[#A8431B] mt-2 text-white rounded-full py-2 font-semibold shadow-lg">
+                        Entrar
+                </button>
+
+                
 
             </form>
-            <p class="opacity-60 italic pb-4">
-                Mín. 8 caracteres, com maiúscula, minúscula, número e caractere especial.
-            </p>
-            <button class="w-full bg-[#A8431B] mt-2 text-white rounded-full py-2 font-semibold shadow-lg">
-                Entrar
-            </button>
                 
 
         </div>

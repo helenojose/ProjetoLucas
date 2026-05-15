@@ -5,3 +5,6 @@ def login(request):
 
 def cadastro(request):
     return render(request,'cadastro.html')
+
+def home(request):
+    return render(request,'home.html')
