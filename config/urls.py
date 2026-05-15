@@ -22,9 +22,10 @@ from appcore.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    
+    path('', home),
     path('login/', login),
     path('cadastro/', cadastro),
-    path('', home),
+    
 ]
 
