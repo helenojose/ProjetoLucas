@@ -51,6 +51,21 @@ class Servico(models.Model):
     class Meta:
         db_table = 'servico'
 
+class Paciente(models.Model):
+    nome_paciente = models.CharField(max_length=255)
+    cpf = models.CharField(max_length=14, unique=True)
+    data_nascimento = models.DateField()
+    telefone = models.CharField(max_length=15)
+    email = models.EmailField(unique=True)
+    endereco = models.TextField()
+    data_cadastro = models.DateField(auto_now_add=True)
+    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
+
+    def __str__(self):
+        return self.nome_paciente
+
+    class Meta:
+        db_table = 'paciente'
 
 # 5. TABELA: agendamento
 class Agendamento(models.Model):
@@ -60,13 +75,8 @@ class Agendamento(models.Model):
         ('CANCELADO', 'Cancelado'),
     ]
 
-    # Dados do paciente
-    nome_paciente = models.CharField(max_length=255)
-    cpf = models.CharField(max_length=14)
-    data_nascimento = models.DateField()
-    telefone = models.CharField(max_length=15)
-    email = models.EmailField()
-    endereco = models.TextField()
+    # Relacionamento com a tabela paciente
+    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
 
     # Dados do atendimento
     data_consulta = models.DateField()
@@ -74,7 +84,7 @@ class Agendamento(models.Model):
     status_consulta = models.CharField(max_length=20, choices=STATUS_CONSULTA_CHOICES, default='AGENDADO')
     observacoes = models.TextField(blank=True, null=True)
 
-    # Relacionamentos
+    # Relacionamentos com os profissionais e procedimentos
     dentista = models.ForeignKey(Dentista, on_delete=models.PROTECT)
     servico = models.ForeignKey(Servico, on_delete=models.PROTECT)
 
