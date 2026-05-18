@@ -32,7 +32,7 @@ def tg_paciente_upper(sender, instance, **kwargs):
     if instance.endereco:
         instance.endereco = instance.endereco.upper()
 
-'''
+
 @receiver(pre_save, sender=Agendamento)
 def tg_agendamento_upper(sender, instance, **kwargs):
      if instance.motivo_cancelamento:
@@ -40,4 +40,3 @@ def tg_agendamento_upper(sender, instance, **kwargs):
 
      if instance.observacao:
          instance.observacao = instance.observacao.upper()
-'''
