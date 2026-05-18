@@ -59,7 +59,7 @@ class Paciente(models.Model):
     nome = models.CharField(max_length=255)
     cpf = models.CharField(max_length=14, unique=True)
     data_nascimento = models.DateField()
-    telefone = models.CharField(max_length=15)
+    telefone = models.CharField(max_length=15, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     endereco = models.CharField(max_length=255)
     data_cadastro = models.DateField(auto_now_add=True)
@@ -75,9 +75,9 @@ class Paciente(models.Model):
 class Agendamento(models.Model):
     # Definindo as escolhas como números
     class StatusAgendamento(models.IntegerChoices):
-        AGENDADO  = 1, 'AGENDADO'
-        CONCLUIDO = 2, 'CONCLUIDO'
-        CANCELADO = 3, 'CANCELADO'
+        AGENDADO  = 1, 'Agendado'
+        CONCLUIDO = 2, 'Concluído'
+        CANCELADO = 3, 'Cancelado'
 
     cod_agendamento = models.AutoField(primary_key=True)
 
