@@ -20,11 +20,21 @@
             <!-- Menu -->
             <div class="flex items-center gap-4 md:gap-8 lg:gap-10 text-gray-600">
 
-                <h1 class="cursor-pointer">Painel</h1>
-                <h1 class="cursor-pointer">Dentistas</h1>
-                <h1 class="cursor-pointer">Pacientes</h1>
-                <h1 class="cursor-pointer">agendamentos</h1>
+                <a href="{% url 'home' %}">
+                    <h1 class="cursor-pointer">Painel</h1>
+                </a>
 
+                <a href="{% url 'dentista' %}">        
+                    <h1 class="cursor-pointer">Dentistas</h1>
+                </a>
+
+                <a href="{% url 'paciente' %}">
+                    <h1 class="cursor-pointer">Pacientes</h1>
+                </a>
+
+                <a href="{% url 'agendamento' %}">
+                    <h1 class="cursor-pointer">agendamentos</h1>
+                </a>   
             </div>
 
             <!-- Botão -->
