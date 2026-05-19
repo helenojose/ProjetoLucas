@@ -2,14 +2,22 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 
+# Classe de escolhas global para reutilizar em todos os status Ativo/Inativo
+class StatusRegistro(models.IntegerChoices):
+    INATIVO = 0, 'Inativo'
+    ATIVO =   1, 'Ativo'
+
 # 1. TABELA: usuario_sistema
 class UsuarioSistema(models.Model):
     cod_usuario_sistema = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=255, unique=True)
     senha = models.CharField(max_length=255)
     data_cadastro = models.DateField(auto_now_add=True)
-    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
+    status = models.IntegerField(choices=StatusRegistro.choices, default=StatusRegistro.ATIVO)
 
+    def __str__(self):
+        return self.email
+    
     class Meta:
         db_table = 'usuario_sistema'
 
@@ -18,7 +26,7 @@ class Especialidade(models.Model):
     cod_especialidade = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=100, unique=True)
     data_cadastro = models.DateField(auto_now_add=True)
-    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
+    status = models.IntegerField(choices=StatusRegistro.choices, default=StatusRegistro.ATIVO)
 
     def __str__(self):
         return self.nome
@@ -33,7 +41,7 @@ class Dentista(models.Model):
     telefone = models.CharField(max_length=15, unique=True)
     especialidade = models.ForeignKey(Especialidade, on_delete=models.PROTECT, db_column='cod_especialidade')
     data_cadastro = models.DateField(auto_now_add=True)
-    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
+    status = models.IntegerField(choices=StatusRegistro.choices, default=StatusRegistro.ATIVO)
 
     def __str__(self):
         return self.nome
@@ -51,7 +59,7 @@ class Paciente(models.Model):
     email = models.EmailField(max_length=255, unique=True)
     endereco = models.CharField(max_length=255)
     data_cadastro = models.DateField(auto_now_add=True)
-    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
+    status = models.IntegerField(choices=StatusRegistro.choices, default=StatusRegistro.ATIVO)
 
     def __str__(self):
         return self.nome
@@ -61,7 +69,7 @@ class Paciente(models.Model):
 
 # 5. TABELA: agendamento
 class Agendamento(models.Model):
-    
+
     # Definindo as escolhas como números
     class StatusAgendamento(models.IntegerChoices):
         AGENDADO  = 1, 'Agendado'

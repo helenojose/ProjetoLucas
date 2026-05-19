@@ -1,10 +1,10 @@
+import re
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 from .models import Especialidade, Dentista, Paciente, Agendamento
-
 # ================================================================
 # == TRIGGERS DE PADRONIZAÇÃO DE DADOS (UPPERCASE)
 # ================================================================
@@ -29,14 +29,14 @@ def tg_paciente_upper(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Agendamento)
 def tg_agendamento_upper(sender, instance, **kwargs):
-     if instance.motivo_cancelamento:
+    if instance.nome_procedimento:
+        instance.nome_procedimento = instance.nome_procedimento.upper()
+
+    if instance.motivo_cancelamento:
          instance.motivo_cancelamento = instance.motivo_cancelamento.upper()
 
-     if instance.observacao:
+    if instance.observacao:
          instance.observacao = instance.observacao.upper()
-
-     if instance.nome_procedimento:
-        instance.nome_procedimento = instance.nome_procedimento.upper()
 
 # ==========================================================================================
 # MAPEAMENTO DE STATUS DO AGENDAMENTO
@@ -118,3 +118,55 @@ def tg_validar_motivo_cancelamento_obrigatorio(sender, instance, **kwargs):
             raise ValidationError(
                 "Erro: O motivo do cancelamento só deve ser preenchido se o status for Cancelado."
             )
+        
+# ==========================================================================================
+# TRIGGER: tg_validar_formato_cpf
+# OBJETIVO: Garantir que o CPF do paciente possua apenas números e o tamanho exato.
+# 
+# CENÁRIO DE PROTEÇÃO:
+# 1. Garante a integridade do dado aceitando estritamente APENAS NUMEROS.
+# 2. Exige o comprimento exato de 11 dígitos, bloqueando máscaras, letras ou espaços.
+# ==========================================================================================
+
+@receiver(pre_save, sender=Paciente)
+def tg_validar_formato_cpf(sender, instance, **kwargs):
+    if instance.cpf:
+        # Executa a expressão regular diretamente no valor recebido
+        if not re.match(r'^[0-9]{11}$', instance.cpf):
+            raise ValidationError(
+                "Erro: O CPF inserido é inválido. Deve conter exatamente 11 dígitos numéricos."
+ )
+        
+# ==========================================================================================
+# TRIGGER: tg_validar_formato_telefone
+# OBJETIVO: Garantir que o telefone (do paciente/dentista) possua apenas números e tamanho válido.
+# 
+# CENÁRIO DE PROTEÇÃO:
+# 1. Valida se o dado inserido contém estritamente apenas caracteres numéricos.
+# 2. Exige o comprimento obrigatório de 11 dígitos (DDD + número), bloqueando máscaras.
+# ==========================================================================================
+
+@receiver(pre_save, sender=Paciente)
+@receiver(pre_save, sender=Dentista)
+def tg_validar_formato_telefone(sender, instance, **kwargs):
+    if instance.telefone:
+        # Garante apenas números com tamanho de 11 (celular) digitos
+        if not re.match(r'^[0-9]{11}$', instance.telefone):
+            raise ValidationError(
+                "Erro: O telefone inserido é inválido. Deve conter apenas números, incluindo o DDD (11 dígitos)."
+            )
+        
+# ==========================================================================================
+# TRIGGER: tg_forcar_null_agendamento
+# OBJETIVO: Forçar o banco de dados a armazenar NULL em vez de string vazia ('').
+# ==========================================================================================
+
+@receiver(pre_save, sender=Agendamento)
+def tg_forcar_null_agendamento(sender, instance, **kwargs):
+    # Se o motivo de cancelamento vier vazio ou apenas com espaços, força ser NULL
+    if instance.motivo_cancelamento == '' or (instance.motivo_cancelamento and not instance.motivo_cancelamento.strip()):
+        instance.motivo_cancelamento = None
+
+    # Se a observação vier vazia ou apenas com espaços, força ser NULL
+    if instance.observacao == '' or (instance.observacao and not instance.observacao.strip()):
+        instance.observacao = None
