@@ -31,7 +31,7 @@ class Dentista(models.Model):
     cod_dentista = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
     telefone = models.CharField(max_length=15, unique=True)
-    especialidade = models.ForeignKey(Especialidade, on_delete=models.PROTECT)
+    especialidade = models.ForeignKey(Especialidade, on_delete=models.PROTECT, db_column='cod_especialidade')
     data_cadastro = models.DateField(auto_now_add=True)
     status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
 
@@ -61,6 +61,7 @@ class Paciente(models.Model):
 
 # 5. TABELA: agendamento
 class Agendamento(models.Model):
+    
     # Definindo as escolhas como números
     class StatusAgendamento(models.IntegerChoices):
         AGENDADO  = 1, 'Agendado'
@@ -72,26 +73,24 @@ class Agendamento(models.Model):
     # Dados do atendimento
     data_consulta = models.DateField()
     hora_consulta = models.TimeField()
-    
+    nome_procedimento = models.CharField(max_length=100)
+
+    # Relacionamentos
+    dentista = models.ForeignKey(Dentista, on_delete=models.PROTECT, db_column='cod_dentista')
+    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, db_column='cod_paciente')
+
     # Campo configurado com a classe StatusAgendamento
     status_agendamento = models.IntegerField(
         choices=StatusAgendamento.choices, 
         default=StatusAgendamento.AGENDADO
     )
     
-    motivo_cancelamento = models.TextField(blank=True, null=True)
-    observacao = models.TextField(blank=True, null=True)
-    nome_procedimento = models.CharField(max_length=100)
-
-    # Relacionamentos
-    dentista = models.ForeignKey(Dentista, on_delete=models.PROTECT)
-    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
-   
+    motivo_cancelamento = models.TextField(blank=True, null=True) 
+    observacao = models.TextField(blank=True, null=True)    
     data_cadastro = models.DateField(auto_now_add=True)
     
     class Meta:
         db_table = 'agendamento'
-
 
 # ==========================================================================================
 # CARGA DE DADOS (Executa logo após o comando 'migrate')
