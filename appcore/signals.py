@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
-from .models import Especialidade, Procedimento, Dentista, Paciente, Agendamento
+from .models import Especialidade, Dentista, Paciente, Agendamento
 
 # ================================================================
 # == TRIGGERS DE PADRONIZAÇÃO DE DADOS (UPPERCASE)
@@ -14,18 +14,10 @@ def tg_especialidade_upper(sender, instance, **kwargs):
     if instance.nome:
         instance.nome = instance.nome.upper()
 
-
-@receiver(pre_save, sender=Procedimento)
-def tg_procedimento_upper(sender, instance, **kwargs):
-    if instance.nome:
-        instance.nome = instance.nome.upper()
-
-
 @receiver(pre_save, sender=Dentista)
 def tg_dentista_upper(sender, instance, **kwargs):
     if instance.nome:
         instance.nome = instance.nome.upper()
-
 
 @receiver(pre_save, sender=Paciente)
 def tg_paciente_upper(sender, instance, **kwargs):
@@ -35,7 +27,6 @@ def tg_paciente_upper(sender, instance, **kwargs):
     if instance.endereco:
         instance.endereco = instance.endereco.upper()
 
-'''
 @receiver(pre_save, sender=Agendamento)
 def tg_agendamento_upper(sender, instance, **kwargs):
      if instance.motivo_cancelamento:
@@ -43,8 +34,9 @@ def tg_agendamento_upper(sender, instance, **kwargs):
 
      if instance.observacao:
          instance.observacao = instance.observacao.upper()
-'''
 
+     if instance.nome_procedimento:
+        instance.nome_procedimento = instance.nome_procedimento.upper()
 
 # ==========================================================================================
 # MAPEAMENTO DE STATUS DO AGENDAMENTO

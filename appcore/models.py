@@ -25,20 +25,7 @@ class Especialidade(models.Model):
     class Meta:
         db_table = 'especialidade'
 
-# 3. TABELA: procedimento
-class Procedimento(models.Model):
-    cod_procedimento = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=100, unique=True)
-    data_cadastro = models.DateField(auto_now_add=True)
-    status = models.IntegerField(default=1, choices=[(1, 'Ativo'), (0, 'Inativo')])
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        db_table = 'procedimento'
-
-# 4. TABELA: dentista
+# 3. TABELA: dentista
 class Dentista(models.Model):
     cod_dentista = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
@@ -53,7 +40,7 @@ class Dentista(models.Model):
     class Meta:
         db_table = 'dentista'
 
-# 5. TABELA: paciente
+# 4. TABELA: paciente
 class Paciente(models.Model):
     cod_paciente = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
@@ -71,7 +58,7 @@ class Paciente(models.Model):
     class Meta:
         db_table = 'paciente'
 
-# 6. TABELA: agendamento
+# 5. TABELA: agendamento
 class Agendamento(models.Model):
     # Definindo as escolhas como números
     class StatusAgendamento(models.IntegerChoices):
@@ -93,11 +80,12 @@ class Agendamento(models.Model):
     
     motivo_cancelamento = models.TextField(blank=True, null=True)
     observacao = models.TextField(blank=True, null=True)
+    nome_procedimento = models.CharField(max_length=100)
 
     # Relacionamentos
     dentista = models.ForeignKey(Dentista, on_delete=models.PROTECT)
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
-    procedimento = models.ForeignKey(Procedimento, on_delete=models.PROTECT)
+   
 
     data_cadastro = models.DateField(auto_now_add=True)
 
