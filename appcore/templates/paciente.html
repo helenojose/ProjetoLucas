@@ -1,0 +1,353 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<body class="font-['Lora']">
+
+    <!--inicio sidbar-->
+    <div class="border-b border-gray-300">
+
+        <div class="max-w-10xl mx-auto flex items-center justify-between px-6 md:px-10 lg:px-16 py-4">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3 text-[#A8431B]">
+
+                <i class="fa-solid fa-leaf text-4xl"></i>
+                <h1 class="text-3xl font-['Lora'] text-[#4A2B1A]">
+                    Odonto
+                </h1>
+
+            </div>
+
+            <!-- Menu -->
+            <div class="flex items-center gap-4 md:gap-8 lg:gap-10 text-gray-600">
+
+                <h1 class="cursor-pointer">Painel</h1>
+                <h1 class="cursor-pointer">Dentistas</h1>
+                <h1 class="cursor-pointer">Pacientes</h1>
+                <h1 class="cursor-pointer">Agendamentos</h1>
+
+            </div>
+
+            <!-- Botão -->
+            <a href="/login/">
+                <button class="bg-[#A8431B] text-white px-4 md:px-6 py-2 rounded-full">
+                    Acessar
+                </button>
+            </a>
+        </div>
+
+    </div>
+    <!--Fim sidbar-->
+
+<header>
+    <div class="max-w-6xl mx-auto flexpt-10 sm:pt-20 md:pt-12">
+
+           <div class="opacity-40 tracking-wider">
+                PESSOAS
+           </div>
+
+           <div class="xl:text-[40px] ">
+                Cadastro de Pacientes
+           </div>
+
+           <div class="opacity-40">
+                Cadastre os pacientes que poderão ser vinculados aos agendamentos.
+           </div>
+           
+            <div 
+                    class="border-b border-dashed border-gray-400 my-4">
+            </div>
+
+        </div>
+
+    <!--Inicio (lado esquerdo e direito )-->
+<section class="max-w-6xl mx-auto pt-10 sm:pt-20 md:pt-8">
+
+    <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
+
+            <!-- esquerda -->
+            <div class="w-full lg:w-[43%]">
+
+                <div class="relative flex flex-col border border-gray-300 bg-[#FFFDF9] w-full p-6 rounded-xl">
+
+                    <div class="text-2xl"> 
+                        Novo Paciente
+                    </div>
+
+                    <form id="formPaciente">
+
+                        <div class="mt-4">
+                            <!-- inicio nome completo -->
+                            <label class="opacity-60 tracking-wider text-sm">NOME COMPLETO</label>
+
+                            <input id="nome" name="nome_completo" type="text"
+                            class=" w-full rounded p-1.5 mb-4 shadow-md border border-gray-300 " required>
+                            <!-- fim nome completo -->
+
+                            <!-- incio CPF, data -->
+                            <div class="flex justify-center gap-4 mb-2">
+                                
+                                <div class="w-1/2">
+
+                                    <!-- cpf -->
+                                    <label class="opacity-60 tracking-wider text-sm">
+                                        CPF
+                                    </label>
+
+                                    <input
+                                        id="cpf"
+                                        name="cpf"
+                                        type="text"
+                                        inputmode="numeric"
+                                        maxlength="14"
+                                        oninput="this.value = this.value
+                                        .replace(/\D/g, '')
+                                        .replace(/(\d{3})(\d)/, '$1.$2')
+                                        .replace(/(\d{3})(\d)/, '$1.$2')
+                                        .replace(/(\d{3})(\d{1,2})$/, '$1-$2')"
+                                        placeholder="000.000.000-00"
+                                        class="w-full rounded p-1.5 mb-4 shadow-md border border-gray-300"
+                                        required
+                                    >
+                                </div>
+
+                                <!-- DATA -->
+                                <div class="w-1/2">
+                                    <label class="opacity-60 tracking-wider text-sm">
+                                        DATA DE NASCIMENTO
+                                    </label>
+
+                                    <input
+                                        id="dataNascimento"
+                                        name="data_nascimento"
+                                        type="date"
+                                        class="w-full rounded p-1.5 mb-4 shadow-md border border-gray-300"
+                                        required
+                                    >
+                                </div>
+
+                            </div>
+                            <!-- fim CPF, data -->
+
+                             <!-- incio telefone, email -->
+                            <div class="flex justify-center gap-4 mb-2">
+                                
+                                <div class="w-1/2">
+                                    
+                                    <!-- telefone -->
+                                    <label class="opacity-60 tracking-wider text-sm">
+                                        TELEFONE
+                                    </label>
+
+                                    <input
+                                        id="telefone"
+                                        name="telefone"
+                                        type="text"
+                                        inputmode="numeric"
+                                        maxlength="15"
+                                        oninput="this.value = this.value
+                                        .replace(/\D/g, '')
+                                        .replace(/(\d{2})(\d)/, '($1) $2')
+                                        .replace(/(\d{5})(\d)/, '$1-$2')
+                                        .replace(/(-\d{4})\d+?$/, '$1')"
+                                        placeholder="(81) 99999-0000"
+                                        class="w-full rounded p-1.5 mb-4 shadow-md border border-gray-300"
+                                        required
+                                    >
+                                </div>
+
+                                <!-- email -->
+                                <div class="w-1/2">
+                                    <label class="opacity-60 tracking-wider text-sm">
+                                        E-MAIL
+                                    </label>
+
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="text"
+                                        class="w-full rounded p-1.5 mb-4 shadow-md border border-gray-300"
+                                        required
+                                    >
+                                </div>
+
+                            </div>
+                            <!-- fim telefone, email -->
+
+                             <!-- inicio endereço -->
+                            <label class="opacity-60 tracking-wider text-sm">ENDEREÇO</label>
+
+                            <input 
+                                id="endereco"
+                                name="endereço" 
+                                type="text"
+                                class=" w-full rounded p-1.5 mb-4 shadow-md border border-gray-300 " required>
+                            <!-- fim endereço -->
+
+                             <!-- Inicio botao cadastrar -->
+                            <div class="mt-4">
+                                <button 
+                                    type="submit"
+                                    class="bg-[#A8431B] text-white px-4 md:px-6 py-2 rounded-full">
+                                    + Cadastrar
+                                </button>
+                            </div>
+                             <!-- fim botao cadastrar -->
+                            
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </div> <!-- FECHA A ESQUERDA -->
+
+            <!-- direita -->
+            <div class="w-full lg:w-[57%]">
+
+                <h1 class="text-2xl text-[#4A2B1A] mb-4">
+                    Pacientes cadastrados
+                </h1>
+
+                <div 
+                    id="listaPacientes"
+                    class="max-h-[500px] overflow-y-auto pr-2 space-y-4">
+                </div>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+    </div>
+</section>
+</header>
+
+<script>
+const form = document.getElementById("formPaciente");
+const listaPacientes = document.getElementById("listaPacientes");
+
+let editandoCard = null;
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const nome = document.getElementById("nome").value;
+    const cpf = document.getElementById("cpf").value;
+    const dataNascimento = document.getElementById("dataNascimento").value;
+    const telefone = document.getElementById("telefone").value;
+    const email = document.getElementById("email").value;
+    const endereco = document.getElementById("endereco").value;
+
+    const dataFormatada = dataNascimento
+        ? new Date(dataNascimento).toLocaleDateString("pt-BR")
+        : "";
+
+    const cardHTML = `
+        <div class="border border-[#E5D4C8] bg-[#FFFDF9] w-full p-5 rounded-2xl shadow-sm paciente-card">
+
+            <div class="flex items-start justify-between">
+
+                <div class="flex gap-4">
+
+                    <div class="w-12 h-12 bg-[#F3E8E1] rounded-xl flex items-center justify-center border border-[#E5D4C8] shrink-0">
+                        <i class="fa-regular fa-user text-[#A8431B] text-sm"></i>
+                    </div>
+
+                    <div>
+                        <h1 class="text-[22px] text-[#4A2B1A] leading-none nomePaciente">
+                            ${nome}
+                        </h1>
+
+                        <div class="flex items-center gap-2 text-sm italic text-gray-500 mt-1">
+                            <p class="cpfPaciente">CPF ${cpf}</p>
+                            <span>·</span>
+                            <p class="dataPaciente">nasc. ${dataFormatada}</p>
+                        </div>
+
+                        <div class="mt-2 space-y-1 text-[#4A2B1A]">
+
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-phone text-xs opacity-70"></i>
+                                <p class="telefonePaciente">${telefone}</p>
+
+                                <i class="fa-regular fa-envelope text-xs opacity-70"></i>
+                                <p class="emailPaciente">${email}</p>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-xs opacity-70"></i>
+                                <p class="enderecoPaciente">${endereco}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                    <button type="button"
+                        class="editarBtn w-11 h-11 rounded-full border border-[#E5D4C8] bg-[#FFF8F2] flex items-center justify-center shadow-sm">
+                        <i class="fa-solid fa-pen text-[#4A2B1A] text-sm"></i>
+                    </button>
+
+                    <button type="button" class="excluirBtn">
+                        <i class="fa-regular fa-trash-can text-red-600 text-lg"></i>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    `;
+
+    if (editandoCard) {
+        editandoCard.outerHTML = cardHTML;
+        editandoCard = null;
+    } else {
+        listaPacientes.insertAdjacentHTML("beforeend", cardHTML);
+    }
+
+    adicionarEventos();
+    form.reset();
+});
+
+function adicionarEventos() {
+    document.querySelectorAll(".excluirBtn").forEach(btn => {
+        btn.onclick = function () {
+            this.closest(".paciente-card").remove();
+        };
+    });
+
+    document.querySelectorAll(".editarBtn").forEach(btn => {
+        btn.onclick = function () {
+
+            const card = this.closest(".paciente-card");
+
+            document.getElementById("nome").value =
+                card.querySelector(".nomePaciente").innerText;
+
+            document.getElementById("cpf").value =
+                card.querySelector(".cpfPaciente")
+                    .innerText.replace("CPF ", "");
+
+            document.getElementById("telefone").value =
+                card.querySelector(".telefonePaciente").innerText;
+
+            document.getElementById("email").value =
+                card.querySelector(".emailPaciente").innerText;
+
+            document.getElementById("endereco").value =
+                card.querySelector(".enderecoPaciente").innerText;
+
+            editandoCard = card;
+        };
+    });
+}
+</script>
+
+</body>
+
+{% endblock %}
