@@ -1,4 +1,6 @@
 ﻿from django.db import models
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
 
 # 1. TABELA: usuario_sistema
 class UsuarioSistema(models.Model):
@@ -10,7 +12,6 @@ class UsuarioSistema(models.Model):
 
     class Meta:
         db_table = 'usuario_sistema'
-
 
 # 2. TABELA: especialidade
 class Especialidade(models.Model):
@@ -86,8 +87,33 @@ class Agendamento(models.Model):
     dentista = models.ForeignKey(Dentista, on_delete=models.PROTECT)
     paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
    
-
     data_cadastro = models.DateField(auto_now_add=True)
-
+    
     class Meta:
         db_table = 'agendamento'
+
+
+# ==========================================================================================
+# CARGA DE DADOS (Executa logo após o comando 'migrate')
+# ==========================================================================================
+
+@receiver(post_migrate)
+def carregar_especialidades_automatico(sender, **kwargs):
+    # Garante que só executa quando o Django terminar de migrar o appcore
+    if sender.name == 'appcore': 
+        print("-> [Models] Iniciando a verificação de especialidades...")
+        
+        lista_especialidades = [
+            'CLÍNICA GERAL', 'ORTODONTIA', 'ENDODONTIA', 'PERIODONTIA',
+            'IMPLANTODONTIA', 'ODONTOPEDIATRIA', 'PRÓTESE DENTÁRIA',
+            'CIRURGIA E TRAUMATOLOGIA BUCOMAXILOFACIAL'
+        ]
+        
+        try:
+            for nome in lista_especialidades:
+                obj, created = Especialidade.objects.get_or_create(nome=nome)
+                if created:
+                    print(f"   [Inserido]: {nome}")
+            print("-> [Models] Verificação finalizada com sucesso!")
+        except Exception as e:
+            print(f"   [Erro] Não foi possível carregar as especialidades: {e}")
